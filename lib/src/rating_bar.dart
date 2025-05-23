@@ -55,6 +55,7 @@ class RatingBar extends StatefulWidget {
     this.tapOnlyMode = false,
     this.updateOnDrag = false,
     this.wrapAlignment = WrapAlignment.start,
+    this.enableMask = false,
     super.key,
   })  : _itemBuilder = null,
         _ratingWidget = ratingWidget;
@@ -83,6 +84,7 @@ class RatingBar extends StatefulWidget {
     this.tapOnlyMode = false,
     this.updateOnDrag = false,
     this.wrapAlignment = WrapAlignment.start,
+    this.enableMask = true,
     super.key,
   })  : _itemBuilder = itemBuilder,
         _ratingWidget = null;
@@ -191,6 +193,8 @@ class RatingBar extends StatefulWidget {
   final IndexedWidgetBuilder? _itemBuilder;
   final RatingWidget? _ratingWidget;
 
+  final bool enableMask;
+
   @override
   State<RatingBar> createState() => _RatingBarState();
 }
@@ -259,7 +263,7 @@ class _RatingBarState extends State<RatingBar> {
     if (index >= _rating) {
       resolvedRatingWidget = _NoRatingWidget(
         size: widget.itemSize,
-        enableMask: ratingWidget == null,
+        enableMask: widget.enableMask,
         unratedColor: widget.unratedColor ?? Theme.of(context).disabledColor,
         child: ratingWidget?.empty ?? item!,
       );
@@ -267,7 +271,7 @@ class _RatingBarState extends State<RatingBar> {
       if (ratingWidget?.half == null) {
         resolvedRatingWidget = _HalfRatingWidget(
           size: widget.itemSize,
-          enableMask: ratingWidget == null,
+        enableMask: widget.enableMask,
           rtlMode: _isRTL,
           unratedColor: widget.unratedColor ?? Theme.of(context).disabledColor,
           child: item!,
